@@ -85,6 +85,10 @@ export default function Home() {
             Menu
           </Link>
           <div className="h-4 w-px bg-white"></div>
+          <Link href="/dashboard" className="hover:text-gray-300 transition-colors">
+            Dashboard
+          </Link>
+          <div className="h-4 w-px bg-white"></div>
           <Link href="/about" className="hover:text-gray-300 transition-colors">
             About Us
           </Link>
