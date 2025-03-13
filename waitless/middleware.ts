@@ -1,18 +1,17 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
 // Define protected routes that require authentication
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/reservations(.*)'])
-
-
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)'])
 
 export default clerkMiddleware(async (auth, req) => {
   // Only check authentication for protected routes
   if (isProtectedRoute(req)) {
-    const { userId, redirectToSignIn } = await auth()
+    const { userId } = await auth()
     
     if (!userId) {
-      // Add custom logic to run before redirecting
-      return redirectToSignIn()
+      // Redirect to home page instead of sign-in page
+      return NextResponse.redirect(new URL('/', req.url))
     }
   }
   
