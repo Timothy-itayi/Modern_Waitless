@@ -2,37 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-
-interface MenuItem {
-  name: string;
-  price: number;
-  description: string;
-  category: string;
-  image_url: string;
-  available: boolean;
-}
 
 export default function Home() {
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchMenu() {
-      try {
-        const response = await fetch('/api/menu');
-        const data = await response.json();
-        setMenuItems(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching menu:', error);
-        setLoading(false);
-      }
-    }
-
-    fetchMenu();
-  }, []);
-
   return (
     <div className="relative min-h-screen">
       {/* Hero Background Image */}
@@ -94,26 +65,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1 className="text-4xl font-bold mb-8">Our Menu</h1>
-        
-        {loading ? (
-          <p>Loading menu...</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {menuItems.map((item, index) => (
-              <div key={index} className="border rounded-lg p-4 shadow-md">
-                <h2 className="text-xl font-semibold">{item.name}</h2>
-                <p className="text-gray-600 mt-2">{item.description}</p>
-                <p className="text-lg font-bold mt-2">${item.price.toFixed(2)}</p>
-                <p className="text-sm mt-1">Category: {item.category}</p>
-                {!item.available && <p className="text-red-500 mt-1">Currently unavailable</p>}
-              </div>
-            ))}
-          </div>
-        )}
-      </main>
     </div>
   );
 }
