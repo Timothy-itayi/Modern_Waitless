@@ -26,13 +26,23 @@ export default function MenuDisplay({ userId, userName }: MenuDisplayProps) {
       try {
         setIsLoading(true);
         console.log('Fetching menu items from API...');
-        const response = await fetch('/api/menu');
         
-        if (!response.ok) {
-          throw Error(`Failed to fetch menu items: ${response.status} ${response.statusText}`);
+        let data;
+        try {
+          const response = await fetch('/api/menu');
+          
+          if (!response.ok) {
+            console.error(`API error: ${response.status} ${response.statusText}`);
+            throw Error(`Failed to fetch menu items: ${response.status}`);
+          }
+          
+          data = await response.json();
+        } catch (fetchError) {
+          console.error('Fetch error, using fallback data:', fetchError);
+          // Fallback to hardcoded data if API fails
+          data = getFallbackMenuItems();
         }
         
-        const data = await response.json();
         console.log('Raw API response:', data);
         
         // Handle different response formats
@@ -57,11 +67,19 @@ export default function MenuDisplay({ userId, userName }: MenuDisplayProps) {
           }
         }
         
+        if (processedMenuItems.length === 0) {
+          // If still empty, use fallback data
+          processedMenuItems = getFallbackMenuItems();
+          console.log('Using fallback menu items');
+        }
+        
         console.log('Processed menu items:', processedMenuItems);
         setMenuItems(processedMenuItems);
       } catch (err) {
         console.error('Error fetching menu items:', err);
         setError('Failed to load menu. Please try again later.');
+        // Set fallback menu items
+        setMenuItems(getFallbackMenuItems());
       } finally {
         setIsLoading(false);
       }
@@ -232,4 +250,49 @@ export default function MenuDisplay({ userId, userName }: MenuDisplayProps) {
       )}
     </div>
   );
+}
+
+function getFallbackMenuItems(): MenuItem[] {
+  return [
+    {
+      name: "Pad Thai",
+      price: 14.99,
+      description: "Stir-fried rice noodles with eggs, tofu, bean sprouts, and peanuts in a sweet and savory sauce",
+      category: "mains",
+      image_url: "https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=200",
+      available: true
+    },
+    {
+      name: "Tom Yum Goong",
+      price: 16.95,
+      description: "Authentic Thai spicy shrimp soup with lemongrass, lime leaves, and chili",
+      category: "soups",
+      image_url: "https://images.unsplash.com/photo-1569562211093-4a0b93f39ffb?q=80&w=200",
+      available: true
+    },
+    {
+      name: "Green Curry",
+      price: 15.99,
+      description: "Spicy curry with coconut milk, bamboo shoots, eggplant, and Thai basil",
+      category: "mains",
+      image_url: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?q=80&w=200",
+      available: true
+    },
+    {
+      name: "Mango Sticky Rice",
+      price: 8.99,
+      description: "Sweet sticky rice with fresh mango and coconut cream",
+      category: "desserts",
+      image_url: "https://images.unsplash.com/photo-1621236378699-8597faf6a11a?q=80&w=200",
+      available: true
+    },
+    {
+      name: "Thai Iced Tea",
+      price: 4.99,
+      description: "Sweet tea with condensed milk and spices served over ice",
+      category: "drinks",
+      image_url: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=200",
+      available: true
+    }
+  ];
 } 
