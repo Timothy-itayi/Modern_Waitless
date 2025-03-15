@@ -10,7 +10,7 @@ export default function Header() {
   // Debug authentication state
   useEffect(() => {
     if (isLoaded) {
-      console.log("Auth state loaded, userId:", userId);
+      console.log("Auth state loaded USER");
     }
   }, [isLoaded, userId]);
 

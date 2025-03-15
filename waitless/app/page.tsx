@@ -7,7 +7,7 @@ import Image from 'next/image';
 export default function Home() {
 
   return (
-    <div className="fixed inset-0 w-full h-full">
+    <div className="fixed inset-0 w-full h-full" style={{ overflow: 'hidden' }}>
       {/* Hero Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
