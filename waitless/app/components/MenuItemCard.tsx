@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 interface MenuItem {
   name: string;
@@ -20,11 +21,14 @@ export default function MenuItemCard({ item, addToOrder }: MenuItemCardProps) {
   return (
     <div className="bg-red-950/50 rounded-lg p-3 border border-red-800/50 shadow-md hover:shadow-lg transition-shadow">
       <div className="flex mb-2">
-        <div className="w-16 h-16 rounded overflow-hidden shadow-sm mr-3 flex-shrink-0">
-          <img 
+        <div className="w-16 h-16 rounded overflow-hidden shadow-sm mr-3 flex-shrink-0 relative">
+          <Image 
             src={item.image_url || "https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=100"} 
             alt={item.name} 
-            className="w-full h-full object-cover"
+            fill
+            sizes="64px"
+            className="object-cover"
+            priority={false}
           />
         </div>
         <div>

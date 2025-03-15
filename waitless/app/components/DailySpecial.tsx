@@ -25,7 +25,7 @@ export default function DailySpecial({
   return (
     <div className="md:col-span-3 lg:col-span-3 bg-gradient-to-br from-red-900/90 to-red-950/90 border border-red-800/50 shadow-md overflow-hidden relative rounded-lg">
       <div className="p-4">
-        <h2 className="text-xl font-serif mb-4 text-orange-100 border-b border-red-800/50 pb-2">Today's Special</h2>
+        <h2 className="text-xl font-serif mb-4 text-orange-100 border-b border-red-800/50 pb-2">Today&apos;s Special</h2>
         {isLoading ? (
           <div className="flex justify-center items-center h-32">
             <div className="text-orange-100">Loading special...</div>
