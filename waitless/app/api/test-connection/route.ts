@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '../../../lib/mongodb';
-import MenuList from '@/app/components/MenuList';
+
 
 export async function GET() {
   try {
