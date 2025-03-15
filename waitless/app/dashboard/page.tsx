@@ -2,7 +2,7 @@ import { auth, currentUser } from '@clerk/nextjs/server'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-export default async function DashboardPage() {
+export default async function Dashboard() {
   // Get the auth session
   const { userId } = await auth()
   

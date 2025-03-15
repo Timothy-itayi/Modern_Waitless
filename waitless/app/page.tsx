@@ -4,12 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 
-
 export default function Home() {
 
-
   return (
-    <div className="relative min-h-screen">
+    <div className="fixed inset-0 w-full h-full">
       {/* Hero Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -17,13 +15,14 @@ export default function Home() {
           alt="Restaurant background"
           width={1900}
           height={1000}
-          style={{ objectFit: 'cover' }}
+          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           className="brightness-50"
+          priority
         />
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center text-white px-4">
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white px-4">
         <h1 className="text-6xl font-bold mb-4">WAITLESS</h1>
         
         <div className="text-2xl mb-8">
@@ -38,7 +37,7 @@ export default function Home() {
         </p>
 
         {/* Call to Action Buttons */}
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4 justify-center">
           <Link 
             href="/menu"
             className="bg-white text-black px-8 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors"
@@ -51,11 +50,10 @@ export default function Home() {
           >
             Book a Table
           </Link>
+       
         </div>
       </div>
-
-
-
     </div>
   );
 }
+ 
