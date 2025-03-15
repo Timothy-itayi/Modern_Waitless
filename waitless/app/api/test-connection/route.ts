@@ -1,33 +1,54 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '../../../lib/mongodb';
+import MenuList from '@/app/components/MenuList';
 
 export async function GET() {
   try {
-    console.log("Attempting to connect to MongoDB...");
+    console.log('Testing MongoDB connection...');
+    
+    // Try to connect to MongoDB
     const client = await clientPromise;
+    console.log('MongoDB connection successful');
     
-    // Test the connection
-    const dbNames = await client.db().admin().listDatabases();
-    console.log(`Connection successful! Available databases: ${dbNames.databases.map(db => db.name).join(', ')}`);
+    // Get database info
+    const adminDb = client.db().admin();
+    const dbInfo = await adminDb.listDatabases();
     
-    // Access the waitlessMenu database
-    const db = client.db('waitlessMenu');
+    // Get list of databases
+    const databases = dbInfo.databases.map(db => db.name);
+    console.log('Available databases:', databases);
     
-    // List collections
-    const collections = await db.listCollections().toArray();
-    console.log(`Collections in waitlessMenu database: ${collections.map(c => c.name).join(', ')}`);
+    // Check for our specific database
+    const hasWaitlessMenu = databases.includes('waitlessMenu');
+    console.log('waitlessMenu database exists:', hasWaitlessMenu);
     
-    return NextResponse.json({ 
-      message: "MongoDB connection successful",
-      databases: dbNames.databases.map(db => db.name),
-      collections: collections.map(c => c.name)
+    // If our database exists, check collections
+    let collections: string[] = [];
+    if (hasWaitlessMenu) {
+      const db = client.db('waitlessMenu');
+      const collectionObjects = await db.listCollections().toArray();
+      collections = collectionObjects.map(col => col.name);
+      console.log('Collections in waitlessMenu:', collections);
+    }
+    
+    return NextResponse.json({
+      connected: true,
+      databases,
+      waitlessMenuExists: hasWaitlessMenu,
+      collections,
+      mongodbUri: process.env.MONGODB_URI ? 
+        `${process.env.MONGODB_URI.substring(0, 15)}...` : 
+        'Not set'
     });
   } catch (error) {
-    console.error(`Error connecting to MongoDB: ${error}`);
+    console.error('MongoDB connection test failed:', error);
     return NextResponse.json(
-      { 
-        error: 'MongoDB Connection Error', 
-        message: error instanceof Error ? error.message : String(error) 
+      {
+        connected: false,
+        error: error instanceof Error ? error.message : String(error),
+        mongodbUri: process.env.MONGODB_URI ? 
+          `${process.env.MONGODB_URI.substring(0, 15)}...` : 
+          'Not set'
       },
       { status: 500 }
     );
