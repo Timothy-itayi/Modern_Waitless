@@ -1,7 +1,19 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+'use client';
+
+import { SignedIn, SignedOut, SignInButton, UserButton, useAuth } from '@clerk/nextjs';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function Header() {
+  const { isLoaded, userId } = useAuth();
+  
+  // Debug authentication state
+  useEffect(() => {
+    if (isLoaded) {
+      console.log("Auth state loaded, userId:", userId);
+    }
+  }, [isLoaded, userId]);
+
   return (
     <div className="flex justify-between items-center w-full">
       <div className="flex items-center">

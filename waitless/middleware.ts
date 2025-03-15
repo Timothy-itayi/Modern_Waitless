@@ -5,6 +5,11 @@ import { NextResponse } from 'next/server'
 const isProtectedRoute = createRouteMatcher(['/dashboard(.*)'])
 
 export default clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth()
+  
+  // For debugging in production
+  console.log(`Path: ${req.nextUrl.pathname}, userId: ${userId}`)
+  
   // Only check authentication for protected routes
   if (isProtectedRoute(req)) {
     const { userId } = await auth()
