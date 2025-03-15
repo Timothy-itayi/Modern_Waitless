@@ -10,12 +10,15 @@ export default clerkMiddleware(async (auth, req) => {
     const { userId } = await auth()
     
     if (!userId) {
-      // Redirect to home page instead of sign-in page
-      return NextResponse.redirect(new URL('/', req.url))
+      // Redirect to sign-in page with a return_to parameter
+      const signInUrl = new URL('/sign-in', req.url)
+      signInUrl.searchParams.set('redirect_url', req.url)
+      return NextResponse.redirect(signInUrl)
     }
   }
   
   // Public routes will pass through without authentication checks
+  return NextResponse.next()
 })
 
 export const config = {
