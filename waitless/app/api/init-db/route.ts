@@ -108,9 +108,8 @@ export async function GET() {
     
     // Create collections if they don't exist
     const menuCollection = db.collection('menu_List');
-    const ordersCollection = db.collection('orders');
     
-    // Clear existing menu items (optional - remove this if you want to keep existing items)
+    // Clear existing menu items
     await menuCollection.deleteMany({});
     console.log("Cleared existing menu items");
     
