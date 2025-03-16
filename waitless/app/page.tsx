@@ -12,7 +12,7 @@ export default async function Home() {
   
   // If no user is authenticated, redirect to sign-in
   if (!userId) {
-    redirect('/');
+    console.log("user not signed it ")
   }
   
   // Get the current user data
