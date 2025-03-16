@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
+
+
 import { InfiniteMovingSlogans } from './components/InfiniteMovingSlogans';
 import { auth, currentUser } from '@clerk/nextjs/server';
 
