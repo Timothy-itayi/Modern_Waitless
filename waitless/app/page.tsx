@@ -11,7 +11,7 @@ export default function Home() {
       {/* Hero Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/background-img.jpg"
+          src="/bg-img.jpeg"
           alt="Restaurant background"
           width={1900}
           height={1000}
