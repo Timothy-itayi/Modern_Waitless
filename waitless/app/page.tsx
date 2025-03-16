@@ -1,11 +1,24 @@
-'use client';
-
 import Image from 'next/image';
 import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
 
-import { InfiniteMovingSlogans } from './components/InfiniteMovingSlogans';
 
-export default function Home() {
+import { InfiniteMovingSlogans } from './components/InfiniteMovingSlogans';
+import { auth, currentUser } from '@clerk/nextjs/server';
+
+export default async function Home() {
+
+
+  const { userId } = await auth();
+  
+  // If no user is authenticated, redirect to sign-in
+  if (!userId) {
+    redirect('/');
+  }
+  
+  // Get the current user data
+  const user = await currentUser();
+
+  
   const slogans = [
     "Why wait when you can waitless?",
     "Food at the speed of thought.",
@@ -37,20 +50,20 @@ export default function Home() {
       {/* Hero Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white px-4">
         <div>
-          <h1 className="text-6xl font-bold mb-4 Title-font bg-[transparent] backdrop-blur-sm">WAITLESS</h1>
+        
+          <h1 className="text-8xl font-extrabold mb-4 tracking-tighter bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text px-4 py-2 backdrop-blur-sm rounded-xl border border-white/20">WAITLESS</h1>
           
+        
           {/* Infinite Moving Slogans */}
-          <div className="mb-8 w-full">
+          <div className="mb-8 w-screen -mx-4 overflow-hidden">
             <InfiniteMovingSlogans items={slogans} speed="slow" />
           </div>
         </div>
        
         <SignedIn>
-          <p className="max-w-2xl mx-auto text-lg mb-12 text-black bg-white">
-            Welcome back! Ready to order?
+          <p className="max-w-md mx-auto text-lg mb-12 bg-white/90 backdrop-blur-sm text-gray-800 py-3 px-6 rounded-lg shadow-md font-medium">
+            Hey <span className="text-indigo-600 font-bold">{user?.firstName}</span>!
           </p>
-          
-       
         </SignedIn>
 
         {/* Conditional text based on sign-in status */}

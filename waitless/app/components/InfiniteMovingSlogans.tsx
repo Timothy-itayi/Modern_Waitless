@@ -74,14 +74,14 @@ export const InfiniteMovingSlogans = ({
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        "scroller relative z-20 w-screen max-w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
         className
       )}
     >
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex min-w-full gap-20 py-4 w-max flex-nowrap",
+          "flex min-w-full gap-8 md:gap-16 py-4 w-max flex-nowrap",
           start && "animate-scroll",
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
@@ -89,7 +89,7 @@ export const InfiniteMovingSlogans = ({
         {items.map((slogan, idx) => (
           <li
             key={idx}
-            className="flex-shrink-0 text-xl md:text-2xl font-medium text-white px-4 py-2 bg-black/30 backdrop-blur-sm rounded-lg"
+            className="flex-shrink-0 text-xl md:text-2xl font-medium text-black px-6 py-3 bg-white/70 backdrop-blur-sm rounded-xl shadow-md"
           >
             {slogan}
           </li>
