@@ -231,23 +231,7 @@ export default function MenuDisplay({ userId, userName }: MenuDisplayProps) {
         addToOrder={addToOrder}
       />
       
-      {/* Debug Info - Remove in production */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="col-span-12 bg-gray-900 p-4 rounded-lg text-xs text-gray-300 font-mono">
-          <details>
-            <summary className="cursor-pointer">Debug Info</summary>
-            <div className="mt-2 overflow-auto max-h-40">
-              <p>Menu Items: {menuItems.length}</p>
-              <p>Categories: {categories.join(', ')}</p>
-              <p>Active Category: {activeCategory}</p>
-              <p>Filtered Items: {filteredMenuItems.length}</p>
-              <p>Order Items: {orderItems.length}</p>
-              <pre>{JSON.stringify({ menuItems: menuItems.slice(0, 2) }, null, 2)}</pre>
-              <pre>{JSON.stringify({ rawData: menuItems }, null, 2)}</pre>
-            </div>
-          </details>
-        </div>
-      )}
+     
     </div>
   );
 }
