@@ -4,8 +4,11 @@ import Header from '@/app/components/header'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Waitless App',
+  title: 'Waitless',
   description: 'Manage your restaurant waitlist efficiently',
+  icons: {
+    icon: "/serving-dish.png",
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
