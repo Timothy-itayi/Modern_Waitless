@@ -1,10 +1,23 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
-
+import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
+import Link from 'next/link';
+import { InfiniteMovingSlogans } from './components/InfiniteMovingSlogans';
 
 export default function Home() {
+  const slogans = [
+    "Why wait when you can waitless?",
+    "Food at the speed of thought.",
+    "Skip the line, save your time.",
+    "Order ahead, eat instead.",
+    "Fast food, faster service.",
+    "Your meal is just a tap away.",
+    "No waiting, just eating.",
+    "From kitchen to table in record time.",
+    "Time is precious, so is your appetite.",
+    "The fastest way from hungry to happy."
+  ];
 
   return (
     <div className="fixed inset-0 w-full h-full" style={{ overflow: 'hidden' }}>
@@ -13,45 +26,46 @@ export default function Home() {
         <Image
           src="/bg-img.jpeg"
           alt="Restaurant background"
-          width={1900}
-          height={1000}
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          className="brightness-50"
-          priority
+          width={2000}
+          height={2000}
+          style={{ objectFit: 'cover' }}
+          className="brightness-70"
+          unoptimized
         />
       </div>
 
       {/* Hero Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white px-4">
-        <h1 className="text-6xl font-bold mb-4">WAITLESS</h1>
-        
-        <div className="text-2xl mb-8">
-          <h2 className="font-light italic mb-4">WE SERVE FOOD</h2>
-          <h2 className="text-7xl font-bold mb-4">WITH LOVE</h2>
+        <div>
+          <h1 className="text-6xl font-bold mb-4 Title-font bg-[transparent] backdrop-blur-sm">WAITLESS</h1>
+          
+          {/* Infinite Moving Slogans */}
+          <div className="mb-8 w-full">
+            <InfiniteMovingSlogans items={slogans} speed="slow" />
+          </div>
         </div>
-
-        <p className="max-w-2xl mx-auto text-lg mb-12">
-          Waitless, your place for delicious food in the heart of your city. 
-          Located at Downtown Street 123, we love serving homemade dishes that are 
-          perfect for sharing with family, friends or colleagues.
-        </p>
-
-        {/* Call to Action Buttons */}
-        <div className="flex flex-wrap gap-4 justify-center">
-          <Link 
-            href="/menu"
-            className="bg-white text-black px-8 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors"
-          >
-            View Menu
-          </Link>
-          <Link 
-            href="/reservations"
-            className="bg-black bg-opacity-50 text-white px-8 py-3 rounded-md font-medium hover:bg-opacity-70 transition-colors border border-white"
-          >
-            Book a Table
-          </Link>
        
-        </div>
+        <SignedIn>
+          <p className="max-w-2xl mx-auto text-lg mb-12 text-black bg-white">
+            Welcome back! Ready to order?
+          </p>
+          
+       
+        </SignedIn>
+
+        {/* Conditional text based on sign-in status */}
+        <SignedOut>
+          <div className="flex items-center justify-center max-w-2xl mx-auto text-lg mb-6 text-black p-3 ">
+            <div className="mr-3">
+              <SignInButton mode="modal">
+                <button className="btn-23">
+                  <span className="text">Sign In</span>
+                  <span className="marquee">Sign In</span>
+                </button>
+              </SignInButton>
+            </div>
+          </div>
+        </SignedOut>
       </div>
     </div>
   );
