@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
-import Link from 'next/link';
+
 import { InfiniteMovingSlogans } from './components/InfiniteMovingSlogans';
 
 export default function Home() {
